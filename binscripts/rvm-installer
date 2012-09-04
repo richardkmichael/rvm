@@ -11,7 +11,9 @@ fi
 export HOME PS4
 export rvm_trace_flag rvm_debug_flag rvm_user_install_flag rvm_ignore_rvmrc rvm_prefix rvm_path
 
+# Permit regex matching in opt parsing, but breaks "bash -n"; use "bash -n -O extglob ...".
 shopt -s extglob
+
 PS4="+ \${BASH_SOURCE##\${rvm_path:-}} : \${FUNCNAME[0]:+\${FUNCNAME[0]}()}  \${LINENO} > "
 set -o errtrace
 set -o errexit
@@ -46,6 +48,7 @@ Options
   [[--]version] <latest|latest-x|latest-x.y|x.y.z> - Install RVM version
   [--]branch    <name> - Install RVM head, from named branch
   --trace              - used to debug the installer script
+  --curl-silent        - used to silence curl (-sS) during scripted installs
 
 Actions
 
@@ -126,7 +129,7 @@ get_and_unpack()
   _file=$2
   _patern=$3
 
-  if curl -L ${_url} -o ${rvm_archives_path}/${_file}
+  if curl ${curl_silent_opts} -L ${_url} -o ${rvm_archives_path}/${_file}
   then
     true
   else
@@ -236,6 +239,10 @@ do
     --trace)
       set -o xtrace
       rvm_trace_flag=1
+      ;;
+
+    --curl-silent)
+      curl_silent_opts="-sS"
       ;;
 
     --path)

@@ -48,7 +48,7 @@ Options
   [[--]version] <latest|latest-x|latest-x.y|x.y.z> - Install RVM version
   [--]branch    <name> - Install RVM head, from named branch
   --trace              - used to debug the installer script
-  --curl-silent        - used to silence curl (-sS) during scripted installs
+  --silent-curl        - used to silence curl (-sS) during scripted installs
 
 Actions
 
@@ -129,7 +129,7 @@ get_and_unpack()
   _file=$2
   _patern=$3
 
-  if curl ${curl_silent_opts} -L ${_url} -o ${rvm_archives_path}/${_file}
+  if curl ${silent_curl_opts} -L ${_url} -o ${rvm_archives_path}/${_file}
   then
     true
   else
@@ -241,8 +241,8 @@ do
       rvm_trace_flag=1
       ;;
 
-    --curl-silent)
-      curl_silent_opts="-sS"
+    --silent-curl)
+      silent_curl_opts="-sS"
       ;;
 
     --path)

@@ -27,9 +27,6 @@ __rvm_parse_args_find_known_flags()
       (--force|--verbose|--debug|--quiet|--silent|--create)
         export "rvm_${1#--}_flag=1"
         ;;
-      (--silent-curl)
-        rvm_silent_curl_opts="-sS"
-        ;;
       (--only-path)
         _temp_var="${1#--}"
         export "rvm_${_temp_var//-/_}_flag=1"
@@ -689,6 +686,10 @@ __rvm_parse_args()
               set -o errtrace
               export PS4="+ \${BASH_SOURCE##\${rvm_path:-}} : \${FUNCNAME[0]:+\${FUNCNAME[0]}()}  \${LINENO} > "
             }
+            ;;
+
+          --silent-curl)
+            rvm_silent_curl_opts="-sS"
             ;;
 
           --)

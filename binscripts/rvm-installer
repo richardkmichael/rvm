@@ -129,7 +129,7 @@ get_and_unpack()
   _file=$2
   _patern=$3
 
-  if curl ${silent_curl_opts} -L ${_url} -o ${rvm_archives_path}/${_file}
+  if curl ${rvm_silent_curl_opts} -L ${_url} -o ${rvm_archives_path}/${_file}
   then
     true
   else
@@ -242,7 +242,7 @@ do
       ;;
 
     --silent-curl)
-      silent_curl_opts="-sS"
+      rvm_silent_curl_opts="-sS"
       ;;
 
     --path)

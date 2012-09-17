@@ -689,7 +689,7 @@ __rvm_parse_args()
             ;;
 
           --silent-curl)
-            rvm_silent_curl_opts="-sS"
+            rvm_silent_curl_flag=1
             ;;
 
           --)

@@ -21,7 +21,7 @@ __rvm_cleanup_download()
 builtin cd "$rvm_archives_path"
 
 [[ -n "$archive" ]] || archive=$(basename "$url")
-fetch_command="curl ${rvm_silent_curl_opts} ${rvm_proxy:+-x}${rvm_proxy:-} -f -L --create-dirs -C - -o ${archive}"
+fetch_command="curl ${rvm_silent_curl_flag:+-sS} ${rvm_proxy:+-x}${rvm_proxy:-} -f -L --create-dirs -C - -o ${archive}"
 rvm_debug "Fetching: $url"
 rvm_debug "Fetch command: $fetch_command"
 

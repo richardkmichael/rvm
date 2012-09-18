@@ -9,7 +9,11 @@ install_package()
 
     case "$archive_format" in
       tar.gz|tgz)
-        "$rvm_scripts_path/fetch" "$package_url/$package-$version.$archive_format" || return $?
+
+        __rvm_log_command "fetch" "NEW FETCHING $package-$version.$archive_format to $rvm_archives_path" \
+          "$rvm_scripts_path/fetch" "$package_url/$package-$version.$archive_format" ||
+          return $?
+
         __rvm_run "$package/extract" \
           "$rvm_tar_command xmzf $rvm_archives_path/$package-$version.$archive_format -C $rvm_src_path ${rvm_tar_options:-}" \
           "Extracting $package-$version.$archive_format to $rvm_src_path"

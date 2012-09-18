@@ -285,7 +285,7 @@ __rvm_teardown()
 
   # TODO: create a cleanse array for this instead of the current hard coded
   # method. The array will be appended to whenever variables are used that
-  # should be cleaned up when the current RVM commadn is done.
+  # should be cleaned up when the current RVM command is done.
   # Cleanse and purge! (may be some redundancy here)
   #
   # NOTE: Removing rvm_bin_path here causes system wide installations to generate

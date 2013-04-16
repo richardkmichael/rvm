@@ -90,13 +90,28 @@ Could not download '${_url}'.
         ;;
       # duplication marker lfdgzkngdkjvnfjknkjvcnbjkncvjxbn
       (77)
+        __curl=$(__rvm_which curl)
+
         log "
-It looks like you have old certificates, run:
+RVM is using ${__curl}, which has problems with the CA bundle (curl error 77), and you
+need to fix them to proceed.
 
-    curl -O http://curl.haxx.se/ca/cacert.pem && sudo mv cacert.pem /usr/local/etc/openssl/cacert.pem
+Curl is affected by the $HOME/.curlrc file or the CURL_CA_BUNDLE environment variable.  If you use
+these, be certain they are correct.  Details in \"man curl\".
 
-Replace /usr/local/etc/openssl/cacert.pem with the displayed CAfile.
+If you need a new CA certificate bundle, consult your package manager or download one and configure
+  curl to use it: \"curl -O http://curl.haxx.se/ca/cacert.pem\".
 "
+
+        __curl_config=$(dirname ${__curl})/curl-config
+        if __rvm_which ${__curl_config} > /dev/null
+        then
+          __curl_ca_bundle=$(${__curl_config} --ca)
+          log "
+Finally, according to ${__curl_config}, ${__curl} defaults to a CA bundle at \"${__curl_ca_bundle}\".
+Be sure it exists, but be aware this is affected by the settings above.
+          "
+        fi
         ;;
       (*)
         rvm_error "There was an error($result), please check ${rvm_log_path}/$rvm_ruby_string/*.log. Next we'll try to fetch via http."
